@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" ng-app="metalabVisitorApp">
+<head>
+    <meta charset="utf-8">
+    <title>论文实验基地</title>
+    <meta name="description" content="论文实验基地">
+
+
+    <link rel="stylesheet" href="bower_components/bootstrap-sass/assets/stylesheets/bootstrap.css"/>
+    <link rel="stylesheet" href="css/aid.css"/>
+    <style type="text/css">
+
+        input {
+            width: 300px;
+        }
+
+        .field-label {
+            width: 100px;
+        }
+
+        .myform {
+            width: 755px;
+            margin: 0 auto;
+            padding: 3em;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="space.html">论文投递</a></li>
+                <li><a href="check.html">论文审核</a></li>
+                <li><a href="manage.html">论文管理</a></li>
+                <li class="active"><a href="login.html">登录</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="banner" id="index-banner">
+    <div class="wrapper">
+        <div>
+
+            <form class="myform">
+
+                <div><label class="field-label">用户名:</label><input id="username" name="username" type="text"/></div>
+                <div><label class="field-label">密码:</label><input id="pass" name="password" type="password"/></div>
+                <div><label class="field-label">邮箱:</label><input id="email" name="email" data-ideal="required email"
+                                                                  type="email"/></div>
+
+            </form>
+
+            <a class="btn btn-info" href="">用户登录</a>
+        </div>
+    </div>
+</div>
+
+<footer>
+
+    <div class="foot-content">
+        <div class="wrapper">
+
+            <div class="clear-float"></div>
+            <hr/>
+            <h5>Copyright &copy; 2015 Aid</h5>
+        </div>
+    </div>
+</footer>
+
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"></script>
+</body>
+</html>
