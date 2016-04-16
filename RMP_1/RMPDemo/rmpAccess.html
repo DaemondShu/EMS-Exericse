@@ -3,14 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="../bower_components/jquery/dist/jquery.js"></script>
-    <script src="../js/RMPDataAccess.js"></script>
+    <script src="../js/jquery-2.2.3.min.js"></script>
+    <script src="../js/dataAccess.js"></script>
 </head>
 <body>
 
 
 </body>
 <script>
-    post();
+    // test
+    function printSuccess2(json)
+    {
+        alert("succes2s");
+    }
+    temp = {title:true,date:"2014-8-9"};
+    //test post
+
+    post("Paper",temp,printSuccess2);
+
+    //test get
+//    get("Paper","");
+ //   get("Paper", 1460778496284);
+
+    //test get
+
+   // temp2 = {id:1460778481648 , title:"xx", date:"4444555"};
+
+    //alert(typeof temp2.id);
+    //put("Paper", temp2);
+
+
+
+    dell("Paper", 1460778684322);
 </script>
 </html>
