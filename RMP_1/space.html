@@ -7,10 +7,7 @@
 
     <link rel="stylesheet" href="bower_components/bootstrap-sass/assets/stylesheets/bootstrap.css"/>
     <link rel="stylesheet" href="css/aid.css"/>
-    <style type="text/css">
 
-
-    </style>
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -24,7 +21,7 @@
                 <li class="active"><a href="space.html">论文投递</a></li>
                 <li><a href="check.html">论文审核</a></li>
                 <li><a href="manage.html">论文管理</a></li>
-                <li><a hrel="index.html">登出</li>
+                <li><a hrel="index.html">登出</a></li>
 
             </ul>
         </div>
@@ -37,8 +34,8 @@
             <form class="myform">
 
                 <div><label class="field-label">论文名称:</label><input id="username" name="username" type="text"/></div>
-                <div><label class="field-label">作者：</label><input id="pass" name="password" type="password"/></div>
-                <div><label class="field-label">发表年月:</label><input id="pass" name="password" type="password"/></div>
+                <div><label class="field-label">作者：</label><input id="password1" name="password1" type="password"/></div>
+                <div><label class="field-label">简介:</label><input id="password2" name="password2" type="password"/></div>
                 <div><input id="File1" runat="server" name="UpLoadFile" type="file"/></div>
 
             </form>
@@ -78,67 +75,22 @@
 <div id="space-content" class="content-block">
     <h1>已提交论文</h1>
     <img src="images/line.png"/>
-    <div class="wrapper">
+    <div class="wrapper" id="papers">
+
         <div class="space-block">
-
             <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                <h3>单身狗进化论</h3>
-                <p>论文编号：</p>
-                <p>作者：</p>
-                <p>状态：</p>
-                <p>投稿日期：</p>
-                <p>标签：</p>
-
+                <h3 class="title">单身狗进化论</h3>
+                <p class="id">论文编号：</p>
+                <p class="author">作者：</p>
+                <p class="status">状态：</p>
+                <p class="date">投稿日期：</p>
+                <p class="tag">标签：</p>
                 <a href="space_01.html">&gt;&gt; 查看详情</a>
             </div>
             <div class="clear-float"></div>
             <hr/>
         </div>
-        <div class="space-block">
 
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                <h3>单身狗进化论</h3>
-                <p>论文编号：</p>
-                <p>作者：</p>
-                <p>状态：</p>
-                <p>投稿日期：</p>
-                <p>标签：</p>
-
-                <a href="space_01.html">&gt;&gt; 查看详情</a>
-            </div>
-            <div class="clear-float"></div>
-            <hr/>
-        </div>
-        <div class="space-block">
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                <h3>单身狗进化论</h3>
-                <p>论文编号：</p>
-                <p>作者：</p>
-                <p>状态：</p>
-                <p>投稿日期：</p>
-                <p>标签：</p>
-
-                <a href="space_01.html">&gt;&gt; 查看详情</a>
-            </div>
-            <div class="clear-float"></div>
-            <hr/>
-        </div>
-        <div class="space-block">
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                <h3>单身狗进化论</h3>
-                <p>论文编号：</p>
-                <p>作者：</p>
-                <p>状态：</p>
-                <p>投稿日期：</p>
-                <p>标签：</p>
-
-                <a href="space_01.html">&gt;&gt; 查看详情</a>
-            </div>
-            <div class="clear-float"></div>
-            <hr/>
-        </div>
     </div>
 </div>
 <footer>
@@ -147,14 +99,25 @@
         <div class="wrapper">
 
             <div class="clear-float"></div>
-            <hr/>
-            <h5>Copyright &copy; 2015 Aid</h5>
+            <h5>没有更多论文了~</h5>
         </div>
     </div>
 </footer>
-
+</body>
 
 <script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"></script>
-</body>
+<script src="js/dataAccess.js"></script>
+<script src="js/displayHelper.js"></script>
+
+<script>
+    $(document).ready(function ()
+    {
+        get("Paper","",function (json)
+        {
+            var jsonArr = getFirstAttr(json);
+            displayPapers(jsonArr);
+        });
+    })
+</script>
 </html>

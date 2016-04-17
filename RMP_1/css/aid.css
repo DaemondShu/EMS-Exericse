@@ -1098,15 +1098,17 @@ input{
     width:300px;
 }
 
-.field-label
-{
-    width:100px;
+.field-label {
+    width: 100px;
+    color: white;
 }
-.myform{
-    width:755px;
-    margin:0 auto;
-    padding:3em;
-    color:white;}
+
+.myform {
+    width: 755px;
+    margin: 0 auto;
+    padding: 3em;
+}
+
 .searchDiv {
     height:50px;
     padding:8px 0 0 0;

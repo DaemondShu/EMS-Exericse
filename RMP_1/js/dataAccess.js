@@ -24,6 +24,23 @@ var RMPProject = "Paper";
 var RMPPwd = "mistake";
 var projectUrl = proxtocol + "://" + address + ":" + port + "/" + RMPschema + "/" + userId + "/" + RMPProject + "/";
 
+/**
+ * 返回对象中的第一个属性
+ * @param object
+ */
+function getFirstAttr(object)
+{
+    for (var attrname in object)
+    {
+        return object[attrname];  //直接for in拿到的是keyName,而不是对象
+    }
+
+}
+
+function emptyCallBack()
+{
+   return;
+}
 
 /**
  * callback function demo for successful ajax
@@ -57,14 +74,15 @@ function isString(str)
  * @param tableNameWithId
  * @param dataStr       :data obejct or json string
  * @param goodCallBack  :have default function
- * @param errorCallback :have default function
+ * @param errorCallBack :have default function
  */
-function post(tableNameWithId, dataStr, goodCallBack, errorCallback)
+function post(tableNameWithId, dataStr, goodCallBack, errorCallBack)
 {
     if (!isString(dataStr))
         dataStr = JSON.stringify(dataStr);
+    //alert(dataStr);
     if (goodCallBack == undefined) goodCallBack = defaultSuccess;
-    if (errorCallback == undefined) errorCallback = defaultError;
+    if (errorCallBack == undefined) errorCallBack = defaultError;
 
 
     $.ajax({
@@ -75,7 +93,7 @@ function post(tableNameWithId, dataStr, goodCallBack, errorCallback)
         contentType: "application/json; charset=utf-8",
         headers: {passwd: RMPPwd},
         success: goodCallBack,  //set success callback function
-        error: errorCallback
+        error: errorCallBack
     });
 }
 
@@ -85,7 +103,7 @@ function post(tableNameWithId, dataStr, goodCallBack, errorCallback)
  * @param tableName
  * @param condition
  * @param goodCallBack  :have default function
- * @param errorCallback :have default function
+ * @param errorCallBack :have default function
  * @Sample
  获取指定id的作者 http://localhost:8080/Entity/U1bd261d221ba87/conference/Author/17
  获取所有作者 http://localhost:8080/Entity/U1bd261d221ba87/conference/Author/
@@ -96,10 +114,10 @@ function post(tableNameWithId, dataStr, goodCallBack, errorCallback)
  获取所有在本体建模领域获得过“最佳论文”的作者  (3层组合查询） http://localhost:8080/Entity/U1bd261d221ba87/conference/Author/?Author.papers.awards.name=最佳论文 & Author.papers.title=(like)本体建模
  */
 
-function get(tableName, condition, goodCallBack, errorCallback)
+function get(tableName, condition, goodCallBack, errorCallBack)
 {
     if (goodCallBack == undefined) goodCallBack = defaultSuccess;
-    if (errorCallback == undefined) errorCallback = defaultError;
+    if (errorCallBack == undefined) errorCallBack = defaultError;
     if (condition == undefined) condition = "";
 
     $.ajax({
@@ -107,9 +125,9 @@ function get(tableName, condition, goodCallBack, errorCallback)
         url: projectUrl + tableName + "/" + condition,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        // headers: {passwd: RMPPwd},
+        headers: {passwd: RMPPwd},
         success: goodCallBack,  //set success callback function
-        error: errorCallback
+        error: errorCallBack
     });
 }
 
@@ -119,11 +137,11 @@ function get(tableName, condition, goodCallBack, errorCallback)
  * @param tableName :format = "talbeName/id"
  * @param dataStr
  * @param goodCallBack
- * @param errorCallback
+ * @param errorCallBack
  * @Sample: PUT http://localhost:8080/Entity/U1bd261d221ba87/conference/Author/17
  */
 
-function put(tableName, dataObj, goodCallBack, errorCallback)
+function put(tableName, dataObj, goodCallBack, errorCallBack)
 {
 
     var id = dataObj.id;
@@ -135,7 +153,7 @@ function put(tableName, dataObj, goodCallBack, errorCallback)
 
     var dataStr = JSON.stringify(dataObj);
     if (goodCallBack == undefined) goodCallBack = defaultSuccess;
-    if (errorCallback == undefined) errorCallback = defaultError;
+    if (errorCallBack == undefined) errorCallBack = defaultError;
 
 
     $.ajax({
@@ -146,7 +164,7 @@ function put(tableName, dataObj, goodCallBack, errorCallback)
         contentType: "application/json; charset=utf-8",
         // headers: {passwd: RMPPwd},
         success: goodCallBack,  //set success callback function
-        error: errorCallback
+        error: errorCallBack
     });
 }
 
@@ -157,13 +175,13 @@ function put(tableName, dataObj, goodCallBack, errorCallback)
  * @param tableNameWithId
  * @param dataStr
  * @param goodCallBack
- * @param errorCallback
+ * @param errorCallBack
  */
 
-function dell(tableName, id, goodCallBack, errorCallback)
+function del(tableName, id, goodCallBack, errorCallBack)
 {
     if (goodCallBack == undefined) goodCallBack = defaultSuccess;
-    if (errorCallback == undefined) errorCallback = defaultError;
+    if (errorCallBack == undefined) errorCallBack = defaultError;
 
 
     $.ajax({
@@ -171,10 +189,31 @@ function dell(tableName, id, goodCallBack, errorCallback)
         url: projectUrl + tableName + "/" + id,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        headers: {passwd: RMPPwd},
+        //headers: {passwd: RMPPwd},
         success: goodCallBack,  //set success callback function
-        error: errorCallback
+        error: errorCallBack
     });
+}
+
+
+
+
+/**
+ * delete all element in table with name of tableName
+ * @param tableName
+ */
+function clearTable(tableName)
+{
+    get(tableName,"",function (json)
+    {
+        var temp = getFirstAttr(json);  //这个狗屁的服务器返回的不是一个json数组,要跳一层.
+        for (var i=0; i<temp.length; i++)  //
+        {
+            //alert(temp[i].id);
+            del(tableName,temp[i].id,emptyCallBack,emptyCallBack);
+        }
+    },defaultError);
+
 }
 
 
