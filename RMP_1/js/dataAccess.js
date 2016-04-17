@@ -2,8 +2,12 @@
  * Created by monkey_d_asce on 16-4-16.
  */
 /*
- RMP服务器其实还是存在很多问题的,比如notnull并没有加入判断.
- 直接get所有和getbyid结果可能会不一样
+ RMP服务器目前还是存在一些问题的,
+ 问题汇总:
+ 1.比如notnull并没有加入判断,不过这是后台服务器的问题
+ 2.如果发现直接get所有和getbyid结果可能会不一致,请用ctrl+f5刷新浏览器缓存就好了
+ 3.chrome使用ajax跨域访问可能会被限制,取消这个限制之后就可以用了.其他浏览器可以正常使用
+
  del失败什么都没返回
  争取做RMP网站的demo
  */
@@ -82,7 +86,7 @@ function post(tableNameWithId, dataStr, goodCallBack, errorCallback)
  * @param condition
  * @param goodCallBack  :have default function
  * @param errorCallback :have default function
- * @apiSample
+ * @Sample
  获取指定id的作者 http://localhost:8080/Entity/U1bd261d221ba87/conference/Author/17
  获取所有作者 http://localhost:8080/Entity/U1bd261d221ba87/conference/Author/
  获取指定姓名的作者 http://localhost:8080/Entity/U1bd261d221ba87/conference/Author/?Author.name=你的名字
@@ -110,13 +114,13 @@ function get(tableName, condition, goodCallBack, errorCallback)
 }
 
 /**
- * replace
+ * replace a record in tableName by id
  * @attention 需要包含资源的所有属性，缺省的属性将被置空（PUT操作的语义是替换资源而非修改资源）,服务器会返回dataobj的json
  * @param tableName :format = "talbeName/id"
  * @param dataStr
  * @param goodCallBack
  * @param errorCallback
- * urlSample: PUT http://localhost:8080/Entity/U1bd261d221ba87/conference/Author/17
+ * @Sample: PUT http://localhost:8080/Entity/U1bd261d221ba87/conference/Author/17
  */
 
 function put(tableName, dataObj, goodCallBack, errorCallback)
@@ -147,13 +151,13 @@ function put(tableName, dataObj, goodCallBack, errorCallback)
 }
 
 /**
- * delete @TODO chrome 需要关掉跨域访问可以用,firefox可以直接用
+ * delete a record in tableName by id
+ * @TODO chrome 目前需要允许跨域访问可以用(运行时添加指令 --allow-file-access-from-files),firefox可以直接用,别的解决方案寻找中
  * @attention DELETE操作是REST服务中的删除操作。一般情况下请不要试图删除一个资源，删除不会导致资源关系产生级联删除。可以使用PUT来删除子资源
  * @param tableNameWithId
  * @param dataStr
  * @param goodCallBack
  * @param errorCallback
- *
  */
 
 function dell(tableName, id, goodCallBack, errorCallback)
