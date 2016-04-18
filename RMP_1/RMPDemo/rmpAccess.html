@@ -3,14 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="../bower_components/jquery/dist/jquery.js"></script>
-    <script src="../js/RMPDataAccess.js"></script>
+    <script src="../js/dataAccess.js"></script>
+    <script src="../js/jquery-2.2.3.min.js"></script>
 </head>
 <body>
-
+nobody~~
 
 </body>
 <script>
-    post();
+    //------------------------------ test post-------------------
+    //    function printSuccess2(json)
+    //    {
+    //        alert("succes2s");
+    //    }
+    //paper1 = {title:"论文一",date:"2016-4-17",outline:"论文一的详细描述",status:"审核中",tag:"标签一",author:"作者一",user_id:1460897060093};
+    //paper2 = {title:"论文二",date:"2016-4-17",outline:"论文二的详细描述",status:"审核中",tag:"标签二",author:"作者二",user_id:1460897060093};
+
+    //post("Paper",paper1);
+    //temp2 = {username:"user1",password:"pwd1",type:"",contact:"13567444213"};
+   // post("User",temp2);
+
+
+    //----------------------------- test get  -----------------------
+
+    //get("Paper", 1460778496284);
+    // temp2 = {id:1460778481648 , title:"xx", date:"4444555"};
+
+
+    //------------------------------ test put-----------------------
+    //alert(typeof temp2.id);
+    //put("Paper", temp2);
+
+
+    //--------------------------- test delete ----------------------
+    //del("Paper", 1460898214319);
+    //clearTable("Paper");
+
+    tempUser = { username:"user", password:"pwd", type:456, contact:"150", userAttach:1460863007271 };
+    post("User",tempUser);
+
+
+    //---------------------
+    //paper1 = {title:"论文一",date:"2016-4-17",outline:"论文一的详细描述",status:"审核中",tag:"标签一",author:"作者一",user_id:""};
+
+
 </script>
 </html>
