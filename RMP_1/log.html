@@ -2,8 +2,8 @@
 <html lang="zh-cmn-Hans" ng-app="metalabVisitorApp">
 <head>
     <meta charset="utf-8">
-    <title>论文实验基地</title>
-    <meta name="description" content="论文实验基地">
+    <title>国际论文审阅系统</title>
+    <meta name="description" content="国际论文审阅系统">
 
 
     <link rel="stylesheet" href="bower_components/bootstrap-sass/assets/stylesheets/bootstrap.css"/>
@@ -22,7 +22,6 @@
                 <li><a href="space.html">论文投递</a></li>
                 <li><a href="check.html">论文审核</a></li>
                 <li><a href="manage.html">论文管理</a></li>
-                <li class="active"><a href="login.html">登录</a></li>
 
             </ul>
         </div>
@@ -36,12 +35,11 @@
 
                 <div><label class="field-label">用户名:</label><input id="username" name="username" type="text"/></div>
                 <div><label class="field-label">密码:</label><input id="pass" name="password" type="password"/></div>
-                <div><label class="field-label">邮箱:</label><input id="email" name="email" data-ideal="required email"
-                                                                  type="email"/></div>
-
+                <!--<div><label class="field-label">邮箱:</label><input id="email" name="email" data-ideal="required email"-->
+                                                                  <!--type="email"/></div>-->
             </form>
 
-            <a class="btn btn-info" href="">用户登录</a>
+            <a class="btn btn-info" onclick="login()">登录</a>
         </div>
     </div>
 </div>
@@ -60,5 +58,7 @@
 
 <script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"></script>
+<script src="js/dataAccess.js"></script>
+<script src="js/logic.js"></script>
 </body>
 </html>

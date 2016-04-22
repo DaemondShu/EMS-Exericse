@@ -2,27 +2,25 @@
 <html lang="zh-cmn-Hans" ng-app="metalabVisitorApp">
 <head>
     <meta charset="utf-8">
-    <title>论文实验基地</title>
-    <meta name="description" content="论文实验基地">
+    <title>国际论文审阅系统</title>
+    <meta name="description" content="国际论文审阅系统">
 
     <link rel="stylesheet" href="bower_components/bootstrap-sass/assets/stylesheets/bootstrap.css"/>
     <link rel="stylesheet" href="css/aid.css"/>
-
 </head>
+
 <body>
+
 <nav class="navbar navbar-default">
     <div class="container-fluid">
-        <div class="navbar-header">
 
-        </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="index.html">首页</a></li>
                 <li class="active"><a href="space.html">论文投递</a></li>
                 <li><a href="check.html">论文审核</a></li>
                 <li><a href="manage.html">论文管理</a></li>
-                <li><a hrel="index.html">登出</a></li>
-
+                <li><a id="logout-model" href="#" onclick="logout()">注销登录</a></li>
             </ul>
         </div>
     </div>
@@ -34,8 +32,8 @@
             <form class="myform">
 
                 <div><label class="field-label">论文名称:</label><input id="username" name="username" type="text"/></div>
-                <div><label class="field-label">作者：</label><input id="password1" name="password1" type="password"/></div>
-                <div><label class="field-label">简介:</label><input id="password2" name="password2" type="password"/></div>
+                <div><label class="field-label">作者：</label><input id="author" name="author" type="text"/></div>
+                <div><label class="field-label">简介:</label><input id="outline" name="outline" type="text"/></div>
                 <div><input id="File1" runat="server" name="UpLoadFile" type="file"/></div>
 
             </form>
@@ -109,10 +107,14 @@
 <script src="bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"></script>
 <script src="js/dataAccess.js"></script>
 <script src="js/displayHelper.js"></script>
+<script src="js/logic.js"></script>
 
 <script>
     $(document).ready(function ()
     {
+        var username=getCookie("RMPUser");
+        alert("username: "+username);
+
         get("Paper","",function (json)
         {
             var jsonArr = getFirstAttr(json);
