@@ -19,10 +19,15 @@ var proxtocol = "http";
 var address = "202.120.40.73";
 var port = "28080";
 var RMPschema = "Entity";
+var RMPfile = "file";
 var userId = "U98eae8340730a";
 var RMPProject = "Paper";
 var RMPPwd = "mistake";
-var projectUrl = proxtocol + "://" + address + ":" + port + "/" + RMPschema + "/" + userId + "/" + RMPProject + "/";
+var EntityUrl = proxtocol + "://" + address + ":" + port + "/" + RMPschema + "/" + userId + "/" + RMPProject + "/";
+var fileUrl = proxtocol + "://" + address + ":" + port + "/" + RMPfile + "/" + userId + "/" + RMPProject + "/";
+
+
+
 
 /**
  * 返回对象中的第一个属性
@@ -87,10 +92,38 @@ function post(tableNameWithId, dataStr, goodCallBack, errorCallBack)
 
     $.ajax({
         type: "POST",
-        url: projectUrl + tableNameWithId,
+        url: EntityUrl + tableNameWithId,
         dataType: "json",
         data: dataStr,
         contentType: "application/json; charset=utf-8",
+        headers: {passwd: RMPPwd},
+        success: goodCallBack,  //set success callback function
+        error: errorCallBack
+    });
+}
+
+
+/**
+ * insert or modify file
+ * @attention 如果需要修改模型，则需要在URL后增加userid（同本帮助页面URL中的userid），并需要设置HTTP header passwd为用户密码. 服务器没有返回值
+ * @param tableNameWithId
+ * @param data       :file object
+ * @param goodCallBack  :have default function
+ * @param errorCallBack :have default function
+ */
+function postFile(tableNameWithId, data, goodCallBack, errorCallBack)
+{
+    //alert(dataStr);
+    if (goodCallBack == undefined) goodCallBack = defaultSuccess;
+    if (errorCallBack == undefined) errorCallBack = defaultError;
+
+    $.ajax({
+        type: "POST",
+        url: EntityUrl + tableNameWithId,
+        dataType: "json",
+        data: data,
+        contentType: false,
+        processData: false,
         headers: {passwd: RMPPwd},
         success: goodCallBack,  //set success callback function
         error: errorCallBack
@@ -122,7 +155,7 @@ function get(tableName, condition, goodCallBack, errorCallBack)
 
     $.ajax({
         type: "GET",
-        url: projectUrl + tableName + "/" + condition,
+        url: EntityUrl + tableName + "/" + condition,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         headers: {passwd: RMPPwd},
@@ -158,7 +191,7 @@ function put(tableName, dataObj, goodCallBack, errorCallBack)
 
     $.ajax({
         type: "PUT",
-        url: projectUrl + tableName + "/" + id,
+        url: EntityUrl + tableName + "/" + id,
         dataType: "json",
         data: dataStr,
         contentType: "application/json; charset=utf-8",
@@ -186,7 +219,7 @@ function del(tableName, id, goodCallBack, errorCallBack)
 
     $.ajax({
         type: "DELETE",
-        url: projectUrl + tableName + "/" + id,
+        url: EntityUrl + tableName + "/" + id,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         //headers: {passwd: RMPPwd},
@@ -216,4 +249,39 @@ function clearTable(tableName)
 
 }
 
+/**
+ * 获取input中的file对象
+ * @param htmlId  html中的id
+ * @returns {*}
+ */
+function getFileObject(htmlId)
+{
+    //get object from input-file tag
+    var s = $(htmlId).get(0).files[0];
+    return s;
+}
 
+/**
+ * 将一个文件和tableName关联并且上传
+ * @param tableName
+ * @param id
+ * @param fileObject
+ */
+function upLoadFile(tableName,id,fileObject)
+{
+
+    var jsonObj = new FormData();
+    jsonObj.append("file",fileObject);
+    postFile(tableName+"/"+id,jsonObj);
+}
+
+/**
+ * 下载与tableName中的id列相关联的文件
+ * @param tableName
+ * @param id
+ *
+ */
+function downloadFile(tableName,id)
+{
+    window.open(fileUrl+tableName+"/"+id);
+}

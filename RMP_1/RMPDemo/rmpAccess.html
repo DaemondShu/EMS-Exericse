@@ -9,6 +9,11 @@
 <body>
 nobody~~
 
+<div><input id="File" runat="server" name="UpLoadFile" type="file"/></div>
+
+<button onclick= "upLoadFile('Paper',1461130903291,getFileObject('#File'))">testUpload</button>
+<button onclick= "downloadFile('Paper',1461130903291)">testDownload</button>
+
 </body>
 <script>
     //------------------
@@ -49,7 +54,13 @@ nobody~~
 
     //---------------------
     //paper1 = {title:"论文一",date:"2016-4-17",outline:"论文一的详细描述",status:"审核中",tag:"标签一",author:"作者一",user_id:""};
+    //post("Attachment")
 
+
+/*
+
+
+*/
 
 </script>
 </html>
