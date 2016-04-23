@@ -43,7 +43,7 @@
 </nav>
 <div class="banner banner-sm" id="resource-banner"></div>
 <div class="more-block">
-    <div class="wrapper">
+    <div class="wrapper" id="papers">
         <div class="header">
             <img src="images/arrow.png"/>
             <h2>论文详情</h2>
@@ -53,23 +53,20 @@
         <div class="space-detail-block">
 
             <div class="space-detail-block-base">
-                <h3>单身狗进化论</h3>
+                <h3 class="title">论文名称</h3>
                 <div class="feature-detail">
-                    <p>作者：xxx</p>
-                    <p>单身狗是一种危险的生物，他们会在不自觉的情况下攻击其他非族类动物</p>
-                    </br>
-                    <a href="">下载附件</a>
+                    <p class="author"></p>
+                    <p class="outline"></p>
                 </div>
 
-
+                <a onclick="downLoad(paperId)">下载附件</a>
                 <div class="feature">
-                    <span>相关改动</span>
+                    <span></span>
                 </div>
                 <div class="feature-detail">
-
                     <div>
-                        <span>审核意见</span>
-                        <select>
+                        <span>审稿意见</span>
+                        <select id="suggestion">
                             <option value="straccept">Strong Accept</option>
                             <option value="accept">Accept</option>
                             <option value="weakaccpet">Weak Accept</option>
@@ -78,10 +75,10 @@
 
                         </select>
                     </div>
-
+                    <br/>
                     <div>
                         <span>信任度</span>
-                        <select>
+                        <select id="confidence">
                             <option value="expert">Expert</option>
                             <option value="high">High</option>
                             <option value="medium">Medium</option>
@@ -92,7 +89,7 @@
 
 
                 </div>
-                <a class="btn btn-info" href="">提交</a>
+                <a class="btn btn-info" onclick="checkSubmit(paperId)">提交</a>
             </div>
 
         </div>
@@ -109,9 +106,25 @@
         </div>
     </div>
 </footer>
-
+</body>
 
 <script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"></script>
-</body>
+<script src="js/dataAccess.js"></script>
+<script src="js/displayHelper.js"></script>
+<script src="js/logic.js"></script>
+
+<script>
+    paperId=getQueryString("id");
+    $(document).ready(function ()
+    {
+
+        get("Paper","?Paper.id="+paperId,function (json)
+        {
+            var jsonArr = getFirstAttr(json);
+            displayPapers("space-detail-block",jsonArr);
+        });
+
+    })
+</script>
 </html>

@@ -77,13 +77,13 @@
 
         <div class="space-block">
             <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                <h3 class="title">单身狗进化论</h3>
+                <h3 class="title">论文名称</h3>
                 <p class="id">论文编号：</p>
                 <p class="author">作者：</p>
                 <p class="status">状态：</p>
                 <p class="date">投稿日期：</p>
                 <p class="tag">标签：</p>
-                <a href="space_01.html">&gt;&gt; 查看详情</a>
+                <a href="space_01.html" id="spacehref">&gt;&gt; 查看详情</a>
             </div>
             <div class="clear-float"></div>
             <hr/>
@@ -118,7 +118,8 @@
         get("Paper","",function (json)
         {
             var jsonArr = getFirstAttr(json);
-            displayPapers(jsonArr);
+            displayPapers("space-block",jsonArr);
+            changeHref("space",jsonArr);
         });
     })
 </script>

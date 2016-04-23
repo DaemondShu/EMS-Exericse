@@ -68,7 +68,18 @@ function signUp() {
     get("User","",function(json)
     {
         //alert("注册中");
+
         var jsonArr = getFirstAttr(json);
+        if(jsonArr==undefined)
+        {
+            message("注册成功", 0);
+            var userTemp = {username: username, password: password1, contact: contact};
+            post("User",userTemp,function (json) {
+                self.location="index.html";
+            });
+            return;
+        }
+
         var len=jsonArr.length;
         for(var i=0;i<len;i++)
         {
@@ -80,7 +91,11 @@ function signUp() {
         }
         message("注册成功",0);
         var userTemp={username: username, password:password1, contact:contact};
-        post("User",userTemp);
+        post("User",userTemp,function (json) {
+            self.location="index.html";
+        });
+
+
 
     });
     
@@ -104,7 +119,7 @@ function login() {
                 if( jsonArr[i].password == password)
                 {
                     message("登录成功",0);
-                    setCookie("RMPUser",username,"d1","/");
+                    setCookie("RMPUserId",jsonArr[i].id,"d1","/");
                     self.location="space.html";
                     return;
                 }
@@ -121,13 +136,13 @@ function login() {
  * 注销登录
  */
 function logout() {
-    var username=getCookie("RMPUser");
-    if(username=="")
+    var userId=getCookie("RMPUserId");
+    if(userId=="")
     {
         message("未登录用户",0);
 
     }
-    else setCookie("RMPUser","","s0","/");
+    else setCookie("RMPUserId","","s0","/");
     self.location="index.html";
 
 }
@@ -135,24 +150,11 @@ function logout() {
 /**
  * 上传论文
  */
-function upFile(str,json)
-{
-    get("Paper",str,function (json) {
-        message("json0: "+JSON.stringify(json),1);
-        var jsonArr0 = getFirstAttr(json);
-        message(jsonArr0,1);
-        //var paperId = jsonArr[0].id;
-        //upLoadFile("Paper", paperId, getFileObject(("#File")));
-    });
-}
 function upLoad() {
     var title=$("#title").val();
     var author=$("#author").val();
     var outline=$("#outline").val();
-    //var paper={title:title,author:author,outline:outline};
-    //post("Paper",paper);
     var str="?Paper.title="+title.toString()+"&Paper.author="+author.toString();
-    message(str,1);
     get("Paper",str,function (json)
     {
         var jsonArr = getFirstAttr(json);
@@ -163,11 +165,72 @@ function upLoad() {
         }
         else
         {
-            var paper={title:title,author:author,outline:outline};
-            post("Paper",paper,upFile(str,json));
+            var date=new Date();
+            var dateStr=date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate();
+            var paper={title:title,date:dateStr,outline:outline,status:"未审核",author:author,tag:"无"};
+            post("Paper",paper,function (json) {
+                message(JSON.stringify(json),1);
+                var paperId = json.id;
+                message(paperId,1);
+                upLoadFile("Paper", paperId, getFileObject(("#File1")));
+            });
 
         }
 
     });
+}
+/**
+ * 下载论文正文
+ * @param paperId
+ */
+function downLoad(paperId) {
+    downloadFile("Paper",paperId);
 
+}
+function checkSubmit(paperId) {
+    var sugNum=(document.getElementById("suggestion")).selectedIndex;
+    var conNum=(document.getElementById("confidence")).selectedIndex;
+    var userid=parseInt(getCookie("RMPUserId"));
+    var paperid=parseInt(paperId);
+    var review={suggestion:sugNum,confidence:conNum,paper_id:paperid,user_id:userid};
+    //alert(review.toString());
+    post("Review",review);
+}
+function manageSubmit(paperId) {
+    var judges=new Array([5]);
+    judges[0]=$("#people1").val();
+    judges[1]=$("#people2").val();
+    judges[2]=$("#people3").val();
+    judges[3]=$("#people4").val();
+    judges[4]=$("#people5").val();
+    var count=0;
+    var judgesId=0;
+    get("User","",function (json) {
+        var jsonArr = getFirstAttr(json);
+        var len = jsonArr.length;
+        for (var i = 0; i < 5; i++) {
+            if (judges[i] != "") {
+                count++;
+            }
+        }
+        if (count < 3) {
+            message("审核人数需要3-5人", 0);
+            return;
+        }
+        for (var i = 0; i < len; i++) {
+            for (var j = 0; j < 5; j++) {
+                if (jsonArr[i].username == judges[j]) {
+                    judgesId = jsonArr[i].id;
+                    var tmp = {paper_id: parseInt(paperId), user_id: judgesId};
+                    post("Review", tmp);
+                }
+            }
+        }
+    });
+
+
+}
+function addTag()
+{
+    
 }

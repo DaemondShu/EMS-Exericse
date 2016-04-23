@@ -88,9 +88,25 @@
         </div>
     </div>
 </footer>
-
-
+</body>
 <script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"></script>
-</body>
+<script src="js/dataAccess.js"></script>
+<script src="js/displayHelper.js"></script>
+<script src="js/logic.js"></script>
+
+<script>
+    paperId=getQueryString("id");
+    $(document).ready(function ()
+    {
+
+        get("Paper","?Paper.id="+paperId,function (json)
+        {
+            var jsonArr = getFirstAttr(json);
+            displayPapers("space-detail-block",jsonArr);
+        });
+
+    })
+</script>
+
 </html>

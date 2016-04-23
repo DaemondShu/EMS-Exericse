@@ -10,7 +10,7 @@ function message(msg,showFlag){
    //if(showFlag == 0)
         alert(msg);
 }
-function displayPapers(paperArray)
+function displayPapers(str,paperArray)
 {
     //init
     var papersDoc = $("#papers");
@@ -32,20 +32,39 @@ function displayPapers(paperArray)
     }
 
     //set attributes
-    var paperHtml = papersDoc.first(".space-block");
+    var paperHtml = papersDoc.first("."+str);
 
     for (i=0; i < len; i++ )
     {
-        var paperHtml = papersDoc.find(".space-block").eq(i);
+        var paperHtml = papersDoc.find("."+str).eq(i);
+        var tt=paperArray[i].title;
         paperHtml.find(".title").html(paperArray[i].title);
         paperHtml.find(".id").html("论文编号："+paperArray[i].id);
         paperHtml.find(".author").html("作者："+paperArray[i].author);
         paperHtml.find(".status").html("状态："+paperArray[i].status);
         paperHtml.find(".date").html("投稿日期："+paperArray[i].date);
         paperHtml.find(".tag").html("标签："+paperArray[i].tag);
-
+        paperHtml.find(".outline").html("简介："+paperArray[i].outline);
+       
         //paperHtml = paperHtml.next(); // next paper
     }
 
 
+}
+function changeHref(str,paperArray) {
+    var papersDoc = $("#papers");
+    var paperHtml = papersDoc.first(".space-block");
+    var len = paperArray.length;
+    for (var i=0; i < len; i++ ) 
+    {
+        var paperHtml = papersDoc.find(".space-block").eq(i);
+        paperHtml.find("#"+str+"href").attr("href", str+"_01.html?id=" + paperArray[i].id);
+    }
+}
+
+function getQueryString(name)
+{
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if(r!=null)return  unescape(r[2]); return null;
 }
