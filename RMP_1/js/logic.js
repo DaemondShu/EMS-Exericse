@@ -1,9 +1,7 @@
 /**
  * Created by monkey_d_asce on 16-4-17.
  */
-function message(msg){
-    alert(msg);
-}
+
 /**
  * 设置cookie
  * @param name
@@ -64,7 +62,7 @@ function signUp() {
     var contact=$("#contact").val();
     if(password1 != password2) 
     {
-        message("两次输入的密码不一致");
+        message("两次输入的密码不一致",0);
         return;
     }
     get("User","",function(json)
@@ -76,11 +74,11 @@ function signUp() {
         {
             if(jsonArr[i].username == username)
             {
-                message("用户名已被注册");
+                message("用户名已被注册",0);
                 return ;
             }
         }
-        message("注册成功");
+        message("注册成功",0);
         var userTemp={username: username, password:password1, contact:contact};
         post("User",userTemp);
 
@@ -94,6 +92,7 @@ function signUp() {
 function login() {
     var username=$("#username").val();
     var password=$("#pass").val();
+    //alert(username,password);
     get("User","",function(json)
     {
         var jsonArr = getFirstAttr(json);
@@ -104,17 +103,17 @@ function login() {
             {
                 if( jsonArr[i].password == password)
                 {
-                    alert("登录成功");
+                    message("登录成功",0);
                     setCookie("RMPUser",username,"d1","/");
                     self.location="space.html";
                     return;
                 }
-                alert("密码错误");
+                message("密码错误",0);
                 return;
             }
 
         }
-        alert("用户名不存在");
+        message("用户名不存在",0);
     });
 
 }
@@ -125,19 +124,50 @@ function logout() {
     var username=getCookie("RMPUser");
     if(username=="")
     {
-        alert("未登录用户");
+        message("未登录用户",0);
 
     }
+    else setCookie("RMPUser","","s0","/");
+    self.location="index.html";
 
 }
 
 /**
  * 上传论文
  */
+function upFile(str,json)
+{
+    get("Paper",str,function (json) {
+        message("json0: "+JSON.stringify(json),1);
+        var jsonArr0 = getFirstAttr(json);
+        message(jsonArr0,1);
+        //var paperId = jsonArr[0].id;
+        //upLoadFile("Paper", paperId, getFileObject(("#File")));
+    });
+}
 function upLoad() {
-    var username=$("#username").val();
+    var title=$("#title").val();
     var author=$("#author").val();
     var outline=$("#outline").val();
+    //var paper={title:title,author:author,outline:outline};
+    //post("Paper",paper);
+    var str="?Paper.title="+title.toString()+"&Paper.author="+author.toString();
+    message(str,1);
+    get("Paper",str,function (json)
+    {
+        var jsonArr = getFirstAttr(json);
+        if(jsonArr!=undefined)
+        {
+            message("已提交相同名称和作者的论文",0);
+            return;
+        }
+        else
+        {
+            var paper={title:title,author:author,outline:outline};
+            post("Paper",paper,upFile(str,json));
 
+        }
+
+    });
 
 }

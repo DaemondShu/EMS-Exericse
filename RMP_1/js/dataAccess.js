@@ -77,7 +77,7 @@ function isString(str)
  * insert or modify
  * @attention 如果需要修改模型，则需要在URL后增加userid（同本帮助页面URL中的userid），并需要设置HTTP header passwd为用户密码. 服务器没有返回值
  * @param tableNameWithId
- * @param dataStr       :data obejct or json string
+ * @param dataStr       :data object or json string
  * @param goodCallBack  :have default function
  * @param errorCallBack :have default function
  */
@@ -113,7 +113,7 @@ function post(tableNameWithId, dataStr, goodCallBack, errorCallBack)
  */
 function postFile(tableNameWithId, data, goodCallBack, errorCallBack)
 {
-    //alert(dataStr);
+    alert(data.toString());
     if (goodCallBack == undefined) goodCallBack = defaultSuccess;
     if (errorCallBack == undefined) errorCallBack = defaultError;
 
@@ -139,7 +139,8 @@ function postFile(tableNameWithId, data, goodCallBack, errorCallBack)
  * @param errorCallBack :have default function
  * @Sample
  获取指定id的作者 http://localhost:8080/Entity/U1bd261d221ba87/conference/Author/17
- 获取所有作者 http://localhost:8080/Entity/U1bd261d221ba87/conference/Author/
+ 获取所有作者 http://localhost:8080/Entity/U1bd261d221ba87/
+ 
  获取指定姓名的作者 http://localhost:8080/Entity/U1bd261d221ba87/conference/Author/?Author.name=你的名字
  获取研究领域和语义网有关的作者 http://localhost:8080/Entity/U1bd261d221ba87/conference/Author/?Author.research=(like)语义网
  获取写过有关“本体建模”的所有作者 (2层查询) http://localhost:8080/Entity/U1bd261d221ba87/conference/Author/?Author.papers.title=(like)本体建模

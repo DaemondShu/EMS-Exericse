@@ -6,6 +6,10 @@
  * 根据paper的json数组来更改页面的值,方式是jquery,教程可以参看http://www.runoob.com/jquery/jquery-tutorial.html里面的
  * @param paperArray : paper数组的对象集合
  */
+function message(msg,showFlag){
+   //if(showFlag == 0)
+        alert(msg);
+}
 function displayPapers(paperArray)
 {
     //init

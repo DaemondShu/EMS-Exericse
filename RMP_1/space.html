@@ -20,7 +20,7 @@
                 <li class="active"><a href="space.html">论文投递</a></li>
                 <li><a href="check.html">论文审核</a></li>
                 <li><a href="manage.html">论文管理</a></li>
-                <li><a id="logout-model" href="#" onclick="logout()">注销登录</a></li>
+                <li><a id="logout-model"  onclick="logout()">注销登录</a></li>
             </ul>
         </div>
     </div>
@@ -31,14 +31,14 @@
 
             <form class="myform">
 
-                <div><label class="field-label">论文名称:</label><input id="username" name="username" type="text"/></div>
+                <div><label class="field-label">论文名称:</label><input id="title" name="title" type="text"/></div>
                 <div><label class="field-label">作者：</label><input id="author" name="author" type="text"/></div>
                 <div><label class="field-label">简介:</label><input id="outline" name="outline" type="text"/></div>
                 <div><input id="File1" runat="server" name="UpLoadFile" type="file"/></div>
 
             </form>
 
-            <a class="btn btn-info" href="">提交论文</a>
+            <a class="btn btn-info" onclick="upLoad()">提交论文</a>
         </div>
     </div>
 </div>
@@ -112,9 +112,9 @@
 <script>
     $(document).ready(function ()
     {
-        var username=getCookie("RMPUser");
-        alert("username: "+username);
 
+        var username=getCookie("RMPUser");
+        if(username==null) $("#logout-model").hide();
         get("Paper","",function (json)
         {
             var jsonArr = getFirstAttr(json);
