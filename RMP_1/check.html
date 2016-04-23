@@ -110,8 +110,8 @@
     $(document).ready(function ()
     {
 
-        var username=getCookie("RMPUser");
-        if(username==null) $("#logout-model").hide();
+        var userId=getCookie("RMPUserId");
+        if(userId==null) $("#logout-model").hide();
         get("Paper","",function (json)
         {
             var jsonArr = getFirstAttr(json);
