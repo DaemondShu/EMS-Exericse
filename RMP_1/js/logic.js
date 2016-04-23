@@ -222,7 +222,7 @@ function manageSubmit(paperId) {
                 if (jsonArr[i].username == judges[j]) {
                     judgesId = jsonArr[i].id;
                     var tmp = {paper_id: parseInt(paperId), user_id: judgesId};
-                    post("Review", tmp);
+                    post("Review",tmp, defaultSuccess,defaultError,false);
                 }
             }
         }
