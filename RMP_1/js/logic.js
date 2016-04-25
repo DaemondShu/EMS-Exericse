@@ -284,7 +284,19 @@ function addTag(paperId)
         var tagStr=json.tag;
         tagStr=tagStr+"#"+tag+" ";
         var tmp={id:json.id,title:json.title,date:json.date,outline:json.outline,
-            author:json.author,tag:tagStr,status:json.status,user_id:json.user_id};
+            author:json.author,tag:tagStr,status:json.status,user_id:json.user_id,feedback:json.feedback};
+        put("Paper",tmp);
+    });
+
+}
+function addFeedback(paperId)
+{
+
+    var feedback=$("#feedback").val();
+    get("Paper",paperId,function (json) {
+
+        var tmp={id:json.id,title:json.title,date:json.date,outline:json.outline,
+            author:json.author,tag:json.tag,status:json.status,user_id:json.user_id,feedback:feedback};
         put("Paper",tmp);
     });
 

@@ -19,7 +19,7 @@
                 <li class="active"><a href="index.html">首页</a></li>
                 <li><a href="space.html">论文投递</a></li>
                 <li><a href="check.html">论文审核</a></li>
-                <li><a href="manage.html">论文管理</a></li>
+                <li><a id="manage-model" href="manage.html" style="display:none">论文管理</a></li>
                 <li><a id="logout-model"  onclick="logout()" style="display:none" >注销登录</a></li>
 
             </ul>
@@ -83,6 +83,8 @@
             $("#logout-model").show();
             get("User",userId,function (json) {
                 $("#login-model").html("你好！ "+json.username);
+                if(json.type==4)
+                    $("#manage-model").show();
             },defaultError,false);
 
         }

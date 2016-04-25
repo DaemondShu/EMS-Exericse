@@ -32,13 +32,7 @@
 
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li><a href="index.html">首页</a></li>
-                <li><a href="space.html">论文投递</a></li>
-                <li><a href="check.html">论文审核</a></li>
-                <li><a href="manage.html">论文管理</a></li>
 
-            </ul>
         </div>
     </div>
 </nav>
@@ -70,8 +64,17 @@
                 <div class="feature-detail">
                     <p class="suggest">评分｜</p>
                     <p class="confi">评价｜</p>
+                    <a class="btn btn-info" onclick="delPaper(paperId)" >删除本篇论文</a>
                 </div>
-                <a class="btn btn-info" onclick="delPaper(paperId)" >删除本篇论文</a>
+
+                <div class="feature-detail">
+                    <br/><span>标签&nbsp;</span><input id="labels" name="labels" type="text"/>
+                    <br/><a class="btn btn-info" onclick="addTag(paperId)">添加</a>
+               </div>
+                <div class="feature-detail">
+                    <br/><span>回复&nbsp;</span><input id="feedback" name="feedback" type="text"/>
+                    <br/><a class="btn btn-info" onclick="addFeedback(paperId)">添加</a>
+                </div>
             </div>
 
         </div>

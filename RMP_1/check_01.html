@@ -30,15 +30,7 @@
         <div class="navbar-header">
 
         </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li><a href="index.html">首页</a></li>
-                <li><a href="space.html">论文投递</a></li>
-                <li><a href="check.html">论文审核</a></li>
-                <li><a href="manage.html">论文管理</a></li>
 
-            </ul>
-        </div>
     </div>
 </nav>
 <div class="banner banner-sm" id="resource-banner"></div>
@@ -60,8 +52,13 @@
                 </div>
 
                 <a onclick="downLoad(paperId)">下载附件</a>
-                <div class="feature">
-                    <span></span>
+                <div id="others">
+                    <div class="other-suggest">
+                        <h3 class="username"></h3>
+                        <p class="suggestion"></p>
+                        <p class="confidence"></p>
+                    </div>
+                    <br/>
                 </div>
                 <div class="feature-detail">
                     <div>
@@ -113,7 +110,7 @@
 <script src="js/dataAccess.js"></script>
 <script src="js/displayHelper.js"></script>
 <script src="js/logic.js"></script>
-
+Lol
 <script>
     paperId=getQueryString("id");
     $(document).ready(function ()
@@ -123,6 +120,11 @@
         {
             var jsonArr = getFirstAttr(json);
             displayPapers("space-detail-block",jsonArr);
+            get("Review","?Review.paper_id="+paperId,function (json)
+            {
+                var paperArr=getFirstAttr(json);
+                displaySuggestion(paperArr);
+            })
         });
 
     })

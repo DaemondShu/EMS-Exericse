@@ -34,7 +34,7 @@ function displayPapers(str,paperArray)
     }
 
     //set attributes
-    var paperHtml = papersDoc.first("."+str);
+    //var paperHtml = papersDoc.first("."+str);
 
     for (i=0; i < len; i++ )
     {
@@ -55,7 +55,7 @@ function displayPapers(str,paperArray)
 }
 function changeHref(str,paperArray) {
     var papersDoc = $("#papers");
-    var paperHtml = papersDoc.first(".space-block");
+    //var paperHtml = papersDoc.first(".space-block");
     var len =0;
     if(paperArray!=undefined)
         len=paperArray.length;
@@ -68,7 +68,7 @@ function changeHref(str,paperArray) {
 function changeClick(paperArray) {
 
     var papersDoc = $("#papers");
-    var paperHtml = papersDoc.first(".space-block");
+    //var paperHtml = papersDoc.first(".space-block");
     var len =0;
     if(paperArray!=undefined)
         len=paperArray.length;
@@ -84,10 +84,29 @@ function getQueryString(name)
     var r = window.location.search.substr(1).match(reg);
     if(r!=null)return  unescape(r[2]); return null;
 }
+function suggestion2Str(sugSum) {
+    var suggest="";
+    if(sugSum==4) suggest="Strong Accept";
+    else if(sugSum==3) suggest="Accept";
+    else if(sugSum==2) suggest="Weak Accept";
+    else if(sugSum==1) suggest="Borderline Paper";
+    else if(sugSum==0) suggest="Weak Reject";
+    return suggest;
+
+}
+function confidence2Str(conSum) {
+    var confidence="";
+    if(conSum==4) confidence="Expert";
+    else if(conSum==3) confidence="High";
+    else if(conSum==2) confidence="Medium";
+    else if(conSum==1) confidence="Low";
+    else if(conSum==0) confidence="null";
+    return confidence;
+}
 function displayRes(resArray) {
     var papersDoc = $("#papers");
     var paperHtml = papersDoc.first(".space-detail-block");
-    var len =0;var sugSum=0.0;var conSum=0.0;var suggest="";var confidence="";
+    var len =0;var sugSum=0.0;var conSum=0.0;
     if(resArray==undefined) return;
     len=resArray.length;
     for (var i=0; i < len; i++ )
@@ -97,17 +116,44 @@ function displayRes(resArray) {
     }
     sugSum=Math.round(sugSum/len);
     conSum=Math.round(conSum/len);
-    if(sugSum==4) suggest="Strong Accept";
-    else if(sugSum==3) suggest="Accept";
-    else if(sugSum==2) suggest="Weak Accept";
-    else if(sugSum==1) suggest="Borderline Paper";
-    else if(sugSum==0) suggest="Weak Reject";
-    if(conSum==4) confidence="Expert";
-    else if(conSum==3) confidence="High";
-    else if(conSum==2) confidence="Medium";
-    else if(conSum==1) confidence="Low";
-    else if(conSum==0) confidence="null";
+    var suggest=suggestion2Str(sugSum);
+    var confidence=confidence2Str(conSum);
+
     paperHtml.find(".suggest").html("审稿意见| "+suggest);
     paperHtml.find(".confi").html("信任度| "+confidence);
    // paperHtml.find(".result").html("最终决定| "+)
+}
+function displaySuggestion(paperArray) {
+    var papersDoc = $("#others");
+    //var singlePaper = papersDoc.find(".space-block");
+    var singlePaper = papersDoc.html();
+
+    //alert(singlePaper.html());
+
+    //clear
+    papersDoc.html("");
+
+
+    //create N empty html code for N papers
+
+    var len =0;
+    if(paperArray!=undefined)
+        len=paperArray.length;
+    var count=0;
+    //set attributes
+
+    for (var i=0; i < len; i++ )
+    {
+        alert(paperArray[i].suggestion);
+        if(paperArray[i].suggestion==undefined) continue;
+        papersDoc.append(singlePaper);
+        var paperHtml = papersDoc.find(".other-suggest").eq(count++);
+        get("User",paperArray[i].id,function (json) {
+            paperHtml.find(".username").html(json.username);
+            paperHtml.find(".suggestion").html("审稿意见："+suggestion2Str(paperArray[i].suggestion));
+            paperHtml.find(".confidence").html("信任度："+confidence2Str(paperArray[i].confidence));
+        });
+
+    }
+
 }
