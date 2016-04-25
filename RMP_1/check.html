@@ -21,8 +21,9 @@
                 <li><a href="space.html">论文投递</a></li>
                 <li class="active"><a href="check.html">论文审核</a></li>
                 <li><a href="manage.html">论文管理</a></li>
-
+                <li><a id="logout-model"  onclick="logout()" style="display:none" >注销登录</a></li>
             </ul>
+            <ul><br/><br/><div id="login-model"></div></ul>
         </div>
     </div>
 </nav>
@@ -109,15 +110,32 @@
 <script>
     $(document).ready(function ()
     {
-
         var userId=getCookie("RMPUserId");
-        if(userId==null) $("#logout-model").hide();
-        get("Paper","",function (json)
+        if(userId!=null)
         {
-            var jsonArr = getFirstAttr(json);
-            displayPapers("space-block",jsonArr);
-            changeHref("check",jsonArr);
-        });
+            $("#logout-model").show();
+            get("User",userId,function (json) {
+                $("#login-model").html("你好！ "+json.username);
+            },defaultError,false);
+
+        }
+        get("Review","?Review.user_id="+userId,function (json) {
+            var checkArr=getFirstAttr(json);
+            var len=0;
+            if(checkArr!=undefined) len=checkArr.length;
+            for(var i=0;i<len;i++)
+            {
+                var paperid=checkArr[i].paper_id;
+                get("Paper",paperid,function (json)
+                {
+                    var jsonArr = getFirstAttr(json);
+                    displayPapers("space-block",jsonArr);
+                    changeHref("check",jsonArr);
+                },defaultError,false);
+            }
+
+        }.defaultError,false);
+
     })
 </script>
 </html>

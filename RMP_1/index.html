@@ -13,7 +13,6 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
@@ -21,9 +20,12 @@
                 <li><a href="space.html">论文投递</a></li>
                 <li><a href="check.html">论文审核</a></li>
                 <li><a href="manage.html">论文管理</a></li>
+                <li><a id="logout-model"  onclick="logout()" style="display:none" >注销登录</a></li>
 
             </ul>
+            <ul><br/><br/><div id="login-model"></div></ul>
         </div>
+
     </div>
 </nav>
 <div class="banner" id="index-banner">
@@ -41,15 +43,68 @@
 
 <footer>
 
-    <div class="foot-content">
-        <div class="wrapper">
+    <div id="space-content" class="content-block">
+        <h1>论文发布</h1>
+        <img src="images/line.png"/>
+        <div class="wrapper" id="papers">
 
-            <div class="clear-float"></div>
+            <div class="space-block">
+                <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                    <h3 class="title">论文名称</h3>
+                    <p class="id">论文编号：</p>
+                    <p class="author">作者：</p>
+                    <p class="status">状态：</p>
+                    <p class="date">投稿日期：</p>
+                    <p class="tag">标签：</p>
+                    <a id="downClick" onclick="downLoad(paperId)">下载附件</a>
+                </div>
+                <div class="clear-float"></div>
+                <hr/>
+            </div>
+
         </div>
     </div>
 </footer>
 
+</body>
 <script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"></script>
-</body>
+<script src="js/dataAccess.js"></script>
+<script src="js/displayHelper.js"></script>
+<script src="js/logic.js"></script>
+
+<script>
+    paperId=0;
+    $(document).ready(function ()
+    {
+        var userId=getCookie("RMPUserId");
+        if(userId!=null)
+        {
+            $("#logout-model").show();
+            get("User",userId,function (json) {
+                $("#login-model").html("你好！ "+json.username);
+            },defaultError,false);
+
+        }
+
+        get("Paper","",function (json)
+        {
+            var jsonArr = getFirstAttr(json);
+            var paperArr=new Array();
+            var len=0;var index=0;
+            if(jsonArr!=undefined)
+                    len=jsonArr.length;
+            for(var i=0;i<len;i++)
+            {
+                if(jsonArr[i].status=="Accept") {
+                    paperArr[index] = jsonArr[i];
+                    paperId = paperArr[index].id;
+                    index++;
+                }
+            }
+            displayPapers("space-block",paperArr);
+            //changeClick(paperArr);
+        },defaultError,false);
+    })
+</script>
 </html>

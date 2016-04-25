@@ -60,18 +60,18 @@
                     <p class="outline">简介</p>
                 </div>
                 <span>是否发表</span>
-                <select>
-                    <option value="reject">拒绝</option>
-                    <option value="again">重审</option>
-                    <option value="pass">通过</option>
+                <select id="decision">
+                    <option value="Reject">Reject</option>
+                    <option value="Resubmit">Resubmit</option>
+                    <option value="Accept">Accept</option>
 
                 </select>
-                <div><a class="btn btn-info" onclick="publish()">确认</a></div>
+                <div><a class="btn btn-info" onclick="publish(paperId)">确认</a></div>
 
                 <div class="feature-detail"><br/>
                     <div>
                         <span>标签&nbsp;</span><input id="labels" name="labels" type="text"/>
-                        <div><a class="btn btn-info" onclick="addTag()">添加</a></div>
+                        <div><a class="btn btn-info" onclick="addTag(paperId)">添加</a></div>
                     </div>
 
                     <div>

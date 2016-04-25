@@ -25,7 +25,9 @@ function displayPapers(str,paperArray)
 
     //create N empty html code for N papers
 
-    var len = paperArray.length;
+    var len =0;
+    if(paperArray!=undefined)
+        len=paperArray.length;
     for (var i =0; i < len; i++)
     {
         papersDoc.append(singlePaper);
@@ -41,7 +43,7 @@ function displayPapers(str,paperArray)
         paperHtml.find(".title").html(paperArray[i].title);
         paperHtml.find(".id").html("论文编号："+paperArray[i].id);
         paperHtml.find(".author").html("作者："+paperArray[i].author);
-        paperHtml.find(".status").html("状态："+paperArray[i].status);
+        paperHtml.find(".status").html("审核结果："+paperArray[i].status);
         paperHtml.find(".date").html("投稿日期："+paperArray[i].date);
         paperHtml.find(".tag").html("标签："+paperArray[i].tag);
         paperHtml.find(".outline").html("简介："+paperArray[i].outline);
@@ -54,17 +56,58 @@ function displayPapers(str,paperArray)
 function changeHref(str,paperArray) {
     var papersDoc = $("#papers");
     var paperHtml = papersDoc.first(".space-block");
-    var len = paperArray.length;
+    var len =0;
+    if(paperArray!=undefined)
+        len=paperArray.length;
     for (var i=0; i < len; i++ ) 
     {
         var paperHtml = papersDoc.find(".space-block").eq(i);
         paperHtml.find("#"+str+"href").attr("href", str+"_01.html?id=" + paperArray[i].id);
     }
 }
+function changeClick(paperArray) {
 
+    var papersDoc = $("#papers");
+    var paperHtml = papersDoc.first(".space-block");
+    var len =0;
+    if(paperArray!=undefined)
+        len=paperArray.length;
+    for (var i=0; i < len; i++ )
+    {
+        var paperHtml = papersDoc.find(".space-block").eq(i);
+        paperHtml.find("downClick").attr("onclick", "downLoad(paperArray[i].id)");
+    }
+}
 function getQueryString(name)
 {
     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
     if(r!=null)return  unescape(r[2]); return null;
+}
+function displayRes(resArray) {
+    var papersDoc = $("#papers");
+    var paperHtml = papersDoc.first(".space-detail-block");
+    var len =0;var sugSum=0.0;var conSum=0.0;var suggest="";var confidence="";
+    if(resArray==undefined) return;
+    len=resArray.length;
+    for (var i=0; i < len; i++ )
+    {
+        sugSum+=resArray[i].suggestion;
+        conSum+=resArray[i].confidence;
+    }
+    sugSum=Math.round(sugSum/len);
+    conSum=Math.round(conSum/len);
+    if(sugSum==4) suggest="Strong Accept";
+    else if(sugSum==3) suggest="Accept";
+    else if(sugSum==2) suggest="Weak Accept";
+    else if(sugSum==1) suggest="Borderline Paper";
+    else if(sugSum==0) suggest="Weak Reject";
+    if(conSum==4) confidence="Expert";
+    else if(conSum==3) confidence="High";
+    else if(conSum==2) confidence="Medium";
+    else if(conSum==1) confidence="Low";
+    else if(conSum==0) confidence="null";
+    paperHtml.find(".suggest").html("审稿意见| "+suggest);
+    paperHtml.find(".confi").html("信任度| "+confidence);
+   // paperHtml.find(".result").html("最终决定| "+)
 }

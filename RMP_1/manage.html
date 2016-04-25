@@ -23,8 +23,9 @@
                 <li><a href="space.html">论文投递</a></li>
                 <li><a href="check.html">论文审核</a></li>
                 <li class="active"><a href="manage.html">论文管理</a></li>
-
+                <li><a id="logout-model"  onclick="logout()" style="display:none" >注销登录</a></li>
             </ul>
+            <ul><br/><br/><div id="login-model"></div></ul>
         </div>
     </div>
 </nav>
@@ -110,15 +111,21 @@
 <script>
     $(document).ready(function ()
     {
+        var userId=getCookie("RMPUserId");
+        if(userId!=null)
+        {
+            $("#logout-model").show();
+            get("User",userId,function (json) {
+                $("#login-model").html("你好！ "+json.username);
+            },defaultError,false);
 
-        var username=getCookie("RMPUser");
-        if(username==null) $("#logout-model").hide();
+        }
         get("Paper","",function (json)
         {
             var jsonArr = getFirstAttr(json);
             displayPapers("space-block",jsonArr);
             changeHref("manage",jsonArr);
-        });
+        },defaultError,false);
     })
 </script>
 </html>

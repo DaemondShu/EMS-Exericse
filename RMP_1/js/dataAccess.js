@@ -44,7 +44,7 @@ function getFirstAttr(object)
 
 function emptyCallBack()
 {
-   return;
+    return;
 }
 
 /**
@@ -80,20 +80,23 @@ function isString(str)
  * @param dataStr       :data object or json string
  * @param goodCallBack  :have default function
  * @param errorCallBack :have default function
+ * @param isAsync
  */
-function post(tableNameWithId, dataStr, goodCallBack, errorCallBack)
+function post(tableNameWithId, dataStr, goodCallBack, errorCallBack , isAsync)
 {
     if (!isString(dataStr))
         dataStr = JSON.stringify(dataStr);
     //alert(dataStr);
     if (goodCallBack == undefined) goodCallBack = defaultSuccess;
     if (errorCallBack == undefined) errorCallBack = defaultError;
+    if (isAsync == undefined) isAsync = true;
 
 
     $.ajax({
         type: "POST",
         url: EntityUrl + tableNameWithId,
         dataType: "json",
+        async: isAsync,
         data: dataStr,
         contentType: "application/json; charset=utf-8",
         headers: {passwd: RMPPwd},
@@ -110,18 +113,21 @@ function post(tableNameWithId, dataStr, goodCallBack, errorCallBack)
  * @param data       :file object
  * @param goodCallBack  :have default function
  * @param errorCallBack :have default function
+ * @param isAsync
  */
-function postFile(tableNameWithId, data, goodCallBack, errorCallBack)
+function postFile(tableNameWithId, data, goodCallBack, errorCallBack, isAsync)
 {
     alert(data.toString());
     if (goodCallBack == undefined) goodCallBack = defaultSuccess;
     if (errorCallBack == undefined) errorCallBack = defaultError;
+    if (isAsync == undefined) isAsync = true;
 
     $.ajax({
         type: "POST",
         url: EntityUrl + tableNameWithId,
         dataType: "json",
         data: data,
+        async: isAsync,
         contentType: false,
         processData: false,
         headers: {passwd: RMPPwd},
@@ -137,10 +143,11 @@ function postFile(tableNameWithId, data, goodCallBack, errorCallBack)
  * @param condition
  * @param goodCallBack  :have default function
  * @param errorCallBack :have default function
+ * @param isAsync
  * @Sample
  获取指定id的作者 http://localhost:8080/Entity/U1bd261d221ba87/conference/Author/17
  获取所有作者 http://localhost:8080/Entity/U1bd261d221ba87/
- 
+
  获取指定姓名的作者 http://localhost:8080/Entity/U1bd261d221ba87/conference/Author/?Author.name=你的名字
  获取研究领域和语义网有关的作者 http://localhost:8080/Entity/U1bd261d221ba87/conference/Author/?Author.research=(like)语义网
  获取写过有关“本体建模”的所有作者 (2层查询) http://localhost:8080/Entity/U1bd261d221ba87/conference/Author/?Author.papers.title=(like)本体建模
@@ -148,17 +155,19 @@ function postFile(tableNameWithId, data, goodCallBack, errorCallBack)
  获取所有在本体建模领域获得过“最佳论文”的作者  (3层组合查询） http://localhost:8080/Entity/U1bd261d221ba87/conference/Author/?Author.papers.awards.name=最佳论文 & Author.papers.title=(like)本体建模
  */
 
-function get(tableName, condition, goodCallBack, errorCallBack)
+function get(tableName, condition, goodCallBack, errorCallBack, isAsync)
 {
     if (goodCallBack == undefined) goodCallBack = defaultSuccess;
     if (errorCallBack == undefined) errorCallBack = defaultError;
     if (condition == undefined) condition = "";
+    if (isAsync == undefined) isAsync = true;
 
     $.ajax({
         type: "GET",
         url: EntityUrl + tableName + "/" + condition,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
+        async: isAsync,
         headers: {passwd: RMPPwd},
         success: goodCallBack,  //set success callback function
         error: errorCallBack
@@ -175,7 +184,7 @@ function get(tableName, condition, goodCallBack, errorCallBack)
  * @Sample: PUT http://localhost:8080/Entity/U1bd261d221ba87/conference/Author/17
  */
 
-function put(tableName, dataObj, goodCallBack, errorCallBack)
+function put(tableName, dataObj, goodCallBack, errorCallBack, isAsync)
 {
 
     var id = dataObj.id;
@@ -188,6 +197,7 @@ function put(tableName, dataObj, goodCallBack, errorCallBack)
     var dataStr = JSON.stringify(dataObj);
     if (goodCallBack == undefined) goodCallBack = defaultSuccess;
     if (errorCallBack == undefined) errorCallBack = defaultError;
+    if (isAsync == undefined) isAsync = true;
 
 
     $.ajax({
@@ -195,6 +205,7 @@ function put(tableName, dataObj, goodCallBack, errorCallBack)
         url: EntityUrl + tableName + "/" + id,
         dataType: "json",
         data: dataStr,
+        async: isAsync,
         contentType: "application/json; charset=utf-8",
         // headers: {passwd: RMPPwd},
         success: goodCallBack,  //set success callback function
@@ -212,16 +223,17 @@ function put(tableName, dataObj, goodCallBack, errorCallBack)
  * @param errorCallBack
  */
 
-function del(tableName, id, goodCallBack, errorCallBack)
+function del(tableName, id, goodCallBack, errorCallBack, isAsync)
 {
     if (goodCallBack == undefined) goodCallBack = defaultSuccess;
     if (errorCallBack == undefined) errorCallBack = defaultError;
-
+    if (isAsync == undefined) isAsync = true;
 
     $.ajax({
         type: "DELETE",
         url: EntityUrl + tableName + "/" + id,
         dataType: "json",
+        async: isAsync,
         contentType: "application/json; charset=utf-8",
         //headers: {passwd: RMPPwd},
         success: goodCallBack,  //set success callback function
