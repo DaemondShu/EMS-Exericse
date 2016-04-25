@@ -81,20 +81,19 @@ function isString(str)
  * @param goodCallBack  :have default function
  * @param errorCallBack :have default function
  */
-function post(tableNameWithId, dataStr, goodCallBack, errorCallBack,isAsync)
+function post(tableNameWithId, dataStr, goodCallBack, errorCallBack)
 {
     if (!isString(dataStr))
         dataStr = JSON.stringify(dataStr);
     //alert(dataStr);
     if (goodCallBack == undefined) goodCallBack = defaultSuccess;
     if (errorCallBack == undefined) errorCallBack = defaultError;
-    if (isAsync == undefined) isAsync = true;
+
 
     $.ajax({
         type: "POST",
         url: EntityUrl + tableNameWithId,
         dataType: "json",
-        async: isAsync,
         data: dataStr,
         contentType: "application/json; charset=utf-8",
         headers: {passwd: RMPPwd},
