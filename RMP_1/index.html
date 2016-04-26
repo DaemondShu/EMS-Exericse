@@ -40,7 +40,23 @@
         </div>
     </div>
 </div>
+<div class="searchDiv">
+    <div class="searchTool">
 
+
+            <select name="" id="chose" class="choose">
+                <option value="0">关键词</option>
+                <option value="1">发表年份</option>
+                <option value="2">作者</option>
+                <option value="3">标签</option>
+            </select>
+
+
+            <input type="text" value="请输入关键词" class="searchTextInit" id="search">
+            <input type="button" value="搜索" class="searchBtn" onclick="searchFooterFunc()">
+
+    </div>
+</div>
 <footer>
 
     <div id="space-content" class="content-block">
@@ -75,6 +91,7 @@
 
 <script>
     paperId=0;
+    //flag=false;
     $(document).ready(function ()
     {
         var userId=getCookie("RMPUserId");
@@ -104,7 +121,8 @@
                     index++;
                 }
             }
-            displayPapers("space-block",paperArr);
+            //if(flag==false)
+                displayPapers("space-block",paperArr);
             //changeClick(paperArr);
         },defaultError,false);
     })

@@ -55,8 +55,10 @@
                 <div id="others">
                     <div class="other-suggest">
                         <h3 class="username"></h3>
-                        <p class="suggestion"></p>
-                        <p class="confidence"></p>
+                        <div class="feature-detail">
+                            <p class="suggestion"></p>
+                            <p class="confidence"></p>
+                        </div>
                     </div>
                     <br/>
                 </div>
@@ -124,8 +126,8 @@ Lol
             {
                 var paperArr=getFirstAttr(json);
                 displaySuggestion(paperArr);
-            })
-        });
+            },defaultError,false)
+        },defaultError,false);
 
     })
 </script>

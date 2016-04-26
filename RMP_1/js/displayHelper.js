@@ -144,16 +144,59 @@ function displaySuggestion(paperArray) {
 
     for (var i=0; i < len; i++ )
     {
-        alert(paperArray[i].suggestion);
+        //alert(paperArray[i].suggestion);
         if(paperArray[i].suggestion==undefined) continue;
         papersDoc.append(singlePaper);
         var paperHtml = papersDoc.find(".other-suggest").eq(count++);
-        get("User",paperArray[i].id,function (json) {
+        get("User",paperArray[i].user_id,function (json) {
+           // var jsonArr=getFirstAttr(json);
             paperHtml.find(".username").html(json.username);
             paperHtml.find(".suggestion").html("审稿意见："+suggestion2Str(paperArray[i].suggestion));
             paperHtml.find(".confidence").html("信任度："+confidence2Str(paperArray[i].confidence));
-        });
+        },defaultError,false);
 
     }
+
+}
+function searchFooterFunc() {
+    
+    var search=$("#search").val();
+    var choose=$("#chose").val();
+    var paperArr=new Array();
+    var index=0;
+    get("Paper","",function (json) {
+        var jsonArr=getFirstAttr(json);
+        var len=0;
+        if(jsonArr!=undefined) len=jsonArr.length;
+        for(var i=0;i<len;i++)
+        {
+            if(jsonArr[i].status=="Accept")
+            {
+                if(choose=="0")
+                {
+                    if(jsonArr[i].title.indexOf(search)>=0)
+                        paperArr[index++]=jsonArr[i];
+                }
+                else if(choose=="1")
+                {
+                    if(jsonArr[i].date.indexOf(search)>=0)
+                        paperArr[index++]=jsonArr[i];
+                }
+                else if(choose=="2")
+                {
+                    if(jsonArr[i].author.indexOf(search)>=0)
+                        paperArr[index++]=jsonArr[i];
+                }
+                else if(choose=="3")
+                {
+                    if(jsonArr[i].tag.indexOf(search)>=0)
+                        paperArr[index++]=jsonArr[i];
+                }
+            }
+        }
+        displayPapers("space-block",paperArr);
+
+    },defaultError,false);
+
 
 }

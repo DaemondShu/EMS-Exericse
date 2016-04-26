@@ -53,6 +53,16 @@
                     <p class="author">作者</p>
                     <p class="outline">简介</p>
                 </div>
+                <div id="others">
+                    <div class="other-suggest">
+                        <h3 class="username"></h3>
+                        <div class="feature-detail">
+                            <p class="suggestion"></p>
+                            <p class="confidence"></p>
+                        </div>
+                    </div>
+                    <br/>
+                </div>
                 <span>是否发表</span>
                 <select id="decision">
                     <option value="Reject">Reject</option>
@@ -108,7 +118,12 @@
         {
             var jsonArr = getFirstAttr(json);
             displayPapers("space-detail-block",jsonArr);
-        });
+            get("Review","?Review.paper_id="+paperId,function (json)
+            {
+                var paperArr=getFirstAttr(json);
+                displaySuggestion(paperArr);
+            },defaultError,false);
+        },defaultError,false);
 
     })
 </script>
