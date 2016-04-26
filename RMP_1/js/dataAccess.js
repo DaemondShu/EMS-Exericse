@@ -298,3 +298,31 @@ function downloadFile(tableName,id)
 {
     window.open(fileUrl+tableName+"/"+id);
 }
+
+
+/**
+ * 根据paper对象生成xml生成string
+ * @param obj
+ */
+function createXML(obj)
+{
+    var result = "<rdf:RDF \n xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">\n";
+    var len = obj.length;
+
+    for (var i=0; i < len; i++)
+    {
+        result += "<rdf:Description rdf:about=\"" + EntityUrl+"/" + obj[i].id + "\">\n";
+        result += "<rdf:title>" + obj[i].title + "</rdf:title>\n";
+        result += "<rdf:date>" + obj[i].date + "</rdf:date>\n";
+        result += "<rdf:outline>" + obj[i].outline + "</rdf:outline>\n";
+        result += "<rdf:status>" + obj[i].status + "</rdf:status>\n";
+        result += "<rdf:tag>" + obj[i].tag + "</rdf:tag>\n";
+        result += "<rdf:author>" + obj[i].author + "</rdf:author>\n";
+        result += "<rdf:feedback>" + obj[i].feedback + "</rdf:feedback>\n";
+        result += "<rdf:user_id>" + obj[i].user_id + "</rdf:user_id>\n";
+        result += "</rdf:Description>\n";
+    }
+
+    result += "</rdf:RDF>";
+    return result;
+}

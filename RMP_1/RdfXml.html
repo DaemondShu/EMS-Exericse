@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RdfXML</title>
+</head>
+<body>
+
+</body>
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="js/dataAccess.js"></script>
+<script>
+    get("Paper","",function (json)
+    {
+        var data = getFirstAttr(json);
+        var xmlString = createXML(data);
+        $("body").text(xmlString);
+    })
+</script>
+
+
+</html>
