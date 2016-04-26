@@ -3,19 +3,27 @@
  */
 
 /**
- * 根据paper的json数组来更改页面的值,方式是jquery,教程可以参看http://www.runoob.com/jquery/jquery-tutorial.html里面的
- * @param paperArray : paper数组的对象集合
+ * 提示信息
+ * @param msg
+ * @param showFlag
  */
 function message(msg,showFlag){
-   //if(showFlag == 0)
+   if(showFlag == 0)
         alert(msg);
 }
+
+var singlePaper = "";
+/**
+ * 根据paper的json数组来更改页面的值,方式是jquery
+ * @param str
+ * @param paperArray
+ */
 function displayPapers(str,paperArray)
 {
     //init
     var papersDoc = $("#papers");
     //var singlePaper = papersDoc.find(".space-block");
-    var singlePaper = papersDoc.html();
+    singlePaper = singlePaper=="" ? papersDoc.html() : singlePaper;
 
     //alert(singlePaper.html());
 
@@ -39,7 +47,7 @@ function displayPapers(str,paperArray)
     for (i=0; i < len; i++ )
     {
         var paperHtml = papersDoc.find("."+str).eq(i);
-        var tt=paperArray[i].title;
+        //var tt=paperArray[i].title;
         paperHtml.find(".title").html(paperArray[i].title);
         paperHtml.find(".id").html("论文编号："+paperArray[i].id);
         paperHtml.find(".author").html("作者："+paperArray[i].author);
@@ -53,6 +61,11 @@ function displayPapers(str,paperArray)
 
 
 }
+/**
+ * 修改对应的页面跳转
+ * @param str
+ * @param paperArray
+ */
 function changeHref(str,paperArray) {
     var papersDoc = $("#papers");
     //var paperHtml = papersDoc.first(".space-block");
@@ -65,25 +78,22 @@ function changeHref(str,paperArray) {
         paperHtml.find("#"+str+"href").attr("href", str+"_01.html?id=" + paperArray[i].id);
     }
 }
-function changeClick(paperArray) {
-
-    var papersDoc = $("#papers");
-    //var paperHtml = papersDoc.first(".space-block");
-    var len =0;
-    if(paperArray!=undefined)
-        len=paperArray.length;
-    for (var i=0; i < len; i++ )
-    {
-        var paperHtml = papersDoc.find(".space-block").eq(i);
-        paperHtml.find("downClick").attr("onclick", "downLoad(paperArray[i].id)");
-    }
-}
+/**
+ * 从url中获取id
+ * @param name
+ * @returns {null}
+ */
 function getQueryString(name)
 {
     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
     if(r!=null)return  unescape(r[2]); return null;
 }
+/**
+ * 获取数据库中的suggestion,转化为对应的字符串显示
+ * @param sugSum
+ * @returns {string}
+ */
 function suggestion2Str(sugSum) {
     var suggest="";
     if(sugSum==4) suggest="Strong Accept";
@@ -94,6 +104,11 @@ function suggestion2Str(sugSum) {
     return suggest;
 
 }
+/**
+ * 获取数据库中的confidence，转化为对应的字符串显示
+ * @param conSum
+ * @returns {string}
+ */
 function confidence2Str(conSum) {
     var confidence="";
     if(conSum==4) confidence="Expert";
@@ -103,6 +118,11 @@ function confidence2Str(conSum) {
     else if(conSum==0) confidence="null";
     return confidence;
 }
+
+/**
+ * 在页面显示最终的审核结果
+ * @param resArray
+ */
 function displayRes(resArray) {
     var papersDoc = $("#papers");
     var paperHtml = papersDoc.first(".space-detail-block");
@@ -119,10 +139,15 @@ function displayRes(resArray) {
     var suggest=suggestion2Str(sugSum);
     var confidence=confidence2Str(conSum);
 
-    paperHtml.find(".suggest").html("审稿意见| "+suggest);
-    paperHtml.find(".confi").html("信任度| "+confidence);
+    paperHtml.find(".suggest").html("审稿意见: "+suggest);
+    paperHtml.find(".confi").html("信任度: "+confidence);
    // paperHtml.find(".result").html("最终决定| "+)
 }
+
+/**
+ * 在页面显示已有的审核意见
+ * @param paperArray
+ */
 function displaySuggestion(paperArray) {
     var papersDoc = $("#others");
     //var singlePaper = papersDoc.find(".space-block");
@@ -158,6 +183,9 @@ function displaySuggestion(paperArray) {
     }
 
 }
+/**
+ * 根据输入的关键词搜索已发布的论文
+ */
 function searchFooterFunc() {
     
     var search=$("#search").val();

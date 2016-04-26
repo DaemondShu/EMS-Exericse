@@ -35,11 +35,12 @@
                 <div><label class="field-label">论文名称:</label><input id="title" name="title" type="text"/></div>
                 <div><label class="field-label">作者：</label><input id="author" name="author" type="text"/></div>
                 <div><label class="field-label">简介:</label><input id="outline" name="outline" type="text"/></div>
-                <div><input id="File1" runat="server" name="UpLoadFile" type="file"/></div>
+                <div><input id="File1" runat="server" name="UpLoadFile" type="file" style="display: none" /></div>
 
             </form>
-
             <a class="btn btn-info" onclick="upLoad()">提交论文</a>
+            <a class="btn btn-info" onclick="$('#File1').click()">上传文件</a>
+
         </div>
     </div>
 </div>
@@ -113,6 +114,8 @@
 <script>
     $(document).ready(function ()
     {
+        displayPapers("",[]);
+
         var userId=getCookie("RMPUserId");
         if(userId!=null)
         {

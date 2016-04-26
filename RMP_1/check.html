@@ -67,18 +67,18 @@
 </div>
 
 <div id="space-content" class="content-block">
-    <h1>已提交论文</h1>
+    <h1>需要审核的论文</h1>
     <img src="images/line.png"/>
     <div class="wrapper" id="papers">
 
         <div class="space-block">
             <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                <h3 class="title">论文名称</h3>
-                <p class="id">论文编号：</p>
-                <p class="author">作者：</p>
-                <p class="status">状态：</p>
-                <p class="date">投稿日期：</p>
-                <p class="tag">标签：</p>
+                <h3 class="title"></h3>
+                <p class="id"></p>
+                <p class="author"></p>
+                <p class="status"></p>
+                <p class="date"></p>
+                <p class="tag"></p>
                 <a href="check_01.html" id="checkhref">&gt;&gt; 进行审核</a>
             </div>
             <div class="clear-float"></div>
@@ -110,6 +110,8 @@
 <script>
     $(document).ready(function ()
     {
+        displayPapers("",[]);
+
         var userId=getCookie("RMPUserId");
         if(userId!=null)
         {

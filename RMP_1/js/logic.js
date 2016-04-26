@@ -32,7 +32,11 @@ function getCookie(name)
     else
         return null;
 }
-
+/**
+ * 获取时间长度
+ * @param str
+ * @returns {number}
+ */
 function getsec(str)
 {
     var str1 = str.substring(1, str.length) * 1;
@@ -289,6 +293,10 @@ function addTag(paperId)
     });
 
 }
+/**
+ * 添加回复
+ * @param paperId
+ */
 function addFeedback(paperId)
 {
 
@@ -316,7 +324,10 @@ function addFeedback(paperId)
     });
 
  }
-
+/**
+ * 删除论文
+ * @param paperId
+ */
 function delPaper(paperId) {
     del("Paper",paperId,function (json) {
         message("删除成功",0);

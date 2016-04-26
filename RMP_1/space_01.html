@@ -54,18 +54,22 @@
                     <p class="outline"></p>
                     <p class="status"></p>
                     <p class="tag"></p>
+                    <a id="downClick" onclick="downLoad(paperId)">下载附件</a>
                     </br>
                 </div>
 
 
                 <div class="feature">
-                    <span>审核反馈</span>
+                    <h3>审核反馈</h3>
                 </div>
                 <div class="feature-detail">
-                    <p class="suggest">评分｜</p>
-                    <p class="confi">评价｜</p>
-                    <a class="btn btn-info" onclick="delPaper(paperId)" >删除本篇论文</a>
+                    <p class="suggest"></p>
+                    <p class="confi"></p>
+
                 </div>
+                <div><input id="File2" runat="server" name="UpLoadFile" type="file" style="display: none" /></div>
+                <a class="btn btn-info" onclick="$('#File2').click();upLoadFile('Paper', paperId, getFileObject(('#File2')));">修改论文</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="btn btn-info" onclick="delPaper(paperId)" >删除论文</a>
 
                 <div class="feature-detail">
                     <br/><span>标签&nbsp;</span><input id="labels" name="labels" type="text"/>
@@ -102,6 +106,7 @@
     paperId=getQueryString("id");
     $(document).ready(function ()
     {
+        displayPapers("",[]);
 
         get("Paper","?Paper.id="+paperId,function (json)
         {

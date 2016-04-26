@@ -114,9 +114,11 @@
 <script src="js/logic.js"></script>
 Lol
 <script>
+
     paperId=getQueryString("id");
     $(document).ready(function ()
     {
+        displayPapers("",[]);
 
         get("Paper","?Paper.id="+paperId,function (json)
         {
