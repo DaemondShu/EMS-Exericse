@@ -80,6 +80,13 @@
 
         </div>
     </div>
+    <div class="foot-content">
+        <div class="wrapper">
+
+            <div class="clear-float"></div>
+            <h5>没有更多论文了~</h5>
+        </div>
+    </div>
 </footer>
 
 </body>
@@ -94,6 +101,8 @@
     //flag=false;
     $(document).ready(function ()
     {
+        displayPapers("",[]);
+
         var userId=getCookie("RMPUserId");
         if(userId!=null)
         {
