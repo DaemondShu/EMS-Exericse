@@ -264,6 +264,9 @@ function manageSubmit(paperId) {
                     judgesId = jsonArr[i].id;
                     var tmp = {paper_id: parseInt(paperId), user_id: judgesId};
                     post("Review", tmp,defaultSuccess,defaultError,false);
+                    var tmp2 = {id:jsonArr[i].id,username:jsonArr[i].username,
+                        password:jsonArr[i].password,type:3,contact:jsonArr[i].contact};
+                    put("User",tmp2,defaultSuccess,defaultError,false);
                 }
             }
         }

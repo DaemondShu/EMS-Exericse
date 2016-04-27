@@ -123,8 +123,10 @@
             },defaultError,false);
 
         }
+        var paperArr=new Array();
         get("Review","?Review.user_id="+userId,function (json) {
             var checkArr=getFirstAttr(json);
+
             var len=0;
             if(checkArr!=undefined) len=checkArr.length;
             for(var i=0;i<len;i++)
@@ -133,13 +135,14 @@
                 get("Paper","?Paper.id="+paperid,function (json)
                 {
                     var jsonArr = getFirstAttr(json);
-                    displayPapers("space-block",jsonArr);
-                    changeHref("check",jsonArr);
+                    paperArr[i]=jsonArr[0];
+
                 },defaultError,false);
             }
 
         },defaultError,false);
-
+        displayPapers("space-block",paperArr);
+        changeHref("check",paperArr);
     })
 </script>
 </html>
