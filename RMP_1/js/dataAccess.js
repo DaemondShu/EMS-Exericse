@@ -2,14 +2,12 @@
  * Created by monkey_d_asce on 16-4-16.
  */
 /*
- RMP服务器目前还是存在一些问题的,
+ RMP服务器的一些问题的及其处理
  问题汇总:
  1.比如notnull并没有加入判断,不过这是后台服务器的问题
  2.如果发现直接get所有和getbyid结果可能会不一致,请用ctrl+f5刷新浏览器缓存就好了
  3.chrome使用ajax跨域访问可能会被限制,取消这个限制之后就可以用了.其他浏览器可以正常使用
-
- del失败什么都没返回
- 争取做RMP网站的demo
+ 4.post操作要注意异步问题，经过测试，如果同时好几个修改的请求发到服务器，服务器会出现block的情况，这个时候要保证操作的先后顺序一致性。
  */
 
 /*
@@ -217,10 +215,11 @@ function put(tableName, dataObj, goodCallBack, errorCallBack, isAsync)
  * delete a record in tableName by id
  * @TODO chrome 目前需要允许跨域访问可以用(运行时添加指令 --allow-file-access-from-files),firefox可以直接用,别的解决方案寻找中
  * @attention DELETE操作是REST服务中的删除操作。一般情况下请不要试图删除一个资源，删除不会导致资源关系产生级联删除。可以使用PUT来删除子资源
- * @param tableNameWithId
- * @param dataStr
- * @param goodCallBack
- * @param errorCallBack
+ * @param tableName  要操作的表格名
+ * @param id   操作的对象id
+ * @param goodCallBack  成功回调函数
+ * @param errorCallBack  失败回调函数
+ * @param isAsync  ajax是否需要同步
  */
 
 function del(tableName, id, goodCallBack, errorCallBack, isAsync)

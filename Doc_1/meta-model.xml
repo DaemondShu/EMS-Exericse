@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--自己定义了一些格式，对应RMP里面的创建的metal-model-->
+
+<user name="nothing">
+
+<project name= "Paper">
+    <resource name="Paper">
+        <column name="title" type="String" notnull ="True"/>
+        <column name="date" type="String" notnull ="True"/>
+        <column name="outline" type="String" notnull ="False"/>
+        <column name="status" type="String" notnull ="False"/>
+        <column name="tag" type="String" notnull ="False"/>
+        <column name="author" type="String" notnull ="False"/>
+        <column name="feedback" type="String" notnull ="True"/>
+        <column name="user_id" type="Long" notnull ="False"/>
+    </resource>
+
+    <resource name ="User">
+        <column name="username" type="String" notnull ="True"/>
+        <column name="password" type="String" notnull ="True"/>
+        <column name="type" type="Integer" notnull ="True"/>
+        <column name="contact" type="String" notnull ="True"/>
+    </resource>
+
+    <resource name ="Review">
+        <column name="suggestion" type="Integer" notnull ="True"/>
+        <column name="confidence" type="Integer" notnull ="True"/>
+        <column name="paper_id" type="Long" notnull ="True"/>
+        <column name="user_id" type="Long" notnull ="True"/>
+    </resource>
+
+</project>
+
+</user>
