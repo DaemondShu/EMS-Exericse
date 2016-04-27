@@ -5,9 +5,11 @@
  RMP服务器的一些问题的及其处理
  问题汇总:
  1.比如notnull并没有加入判断,不过这是后台服务器的问题
- 2.如果发现直接get所有和getbyid结果可能会不一致,请用ctrl+f5刷新浏览器缓存就好了
+ 2.如果发现直接get所有和getbyid结果在数据更改之后可能会不一致,请用ctrl+f5刷新浏览器缓存就好了
  3.chrome使用ajax跨域访问可能会被限制,取消这个限制之后就可以用了.其他浏览器可以正常使用
  4.post操作要注意异步问题，经过测试，如果同时好几个修改的请求发到服务器，服务器会出现block的情况，这个时候要保证操作的先后顺序一致性。
+ 5.做删除操作的远程服务器的响应速度会比较长，需要注意。
+
  */
 
 /*
@@ -51,7 +53,7 @@ function emptyCallBack()
  */
 function defaultSuccess(json)
 {
-    alert("success : " + (typeof json == "string" ? json : JSON.stringify(json))) ;
+    message("success : " + (typeof json == "string" ? json : JSON.stringify(json)),1);
 }
 
 
@@ -61,7 +63,7 @@ function defaultSuccess(json)
  */
 function defaultError(error)
 {
-    alert("error:" + error.responseText);
+    message("error:" + error.responseText, 1);
 }
 
 

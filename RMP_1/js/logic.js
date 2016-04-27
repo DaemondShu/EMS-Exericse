@@ -227,12 +227,8 @@ function checkSubmit(paperId) {
         },defaultError,false);
     },defaultError,false);
 
-
-
-
-
-
 }
+
 /**
  * 审核人设置提交
  * @param paperId
@@ -264,13 +260,14 @@ function manageSubmit(paperId) {
                     judgesId = jsonArr[i].id;
                     var tmp = {paper_id: parseInt(paperId), user_id: judgesId};
                     post("Review", tmp,defaultSuccess,defaultError,false);
-                    var tmp2 = {id:jsonArr[i].id,username:jsonArr[i].username,
+                   /* var tmp2 = {id:jsonArr[i].id,username:jsonArr[i].username,
                         password:jsonArr[i].password,type:3,contact:jsonArr[i].contact};
-                    put("User",tmp2,defaultSuccess,defaultError,false);
+                    put("User",tmp2,defaultSuccess,defaultError,false); TODO*/
                 }
             }
         }
     });
+
     get("Paper",paperId,function(json)
     {
         var tmp={id:json.id,title:json.title,date:json.date,outline:json.outline,
@@ -278,7 +275,10 @@ function manageSubmit(paperId) {
         put("Paper",tmp);
     });
 
+    alert("设置成功");
+    window.location.reload();
 }
+
 /**
  * 添加标签
  * @param paperId
@@ -296,6 +296,7 @@ function addTag(paperId)
     });
 
 }
+
 /**
  * 添加回复
  * @param paperId
@@ -312,6 +313,7 @@ function addFeedback(paperId)
     });
 
 }
+
 /**
  * 是否发表
  * @param paperId
@@ -327,6 +329,7 @@ function addFeedback(paperId)
     });
 
  }
+
 /**
  * 删除论文
  * @param paperId

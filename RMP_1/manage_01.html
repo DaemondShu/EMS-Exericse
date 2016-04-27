@@ -81,7 +81,10 @@
                             <div><span>审稿人3&nbsp;</span><input id="people3" name="peopl3" type="text"/></div>
                             <div><span>审稿人4&nbsp;</span><input id="people4" name="peopl4" type="text"/></div>
                             <div><span>审稿人5&nbsp;</span><input id="people5" name="peopl5" type="text"/></div>
-                            <div><a class="btn btn-info" onclick="manageSubmit(paperId)">提交</a></div>
+                            <div>
+                                <a class="btn btn-info"  onclick="manageSubmit(paperId)">设置审稿人</a> &nbsp;&nbsp;
+                                <a class="btn btn-info"  onclick="clearReview(paperId)">清空审稿人</a>
+                            </div>
                     </div>
 
                 </div>
@@ -110,20 +113,88 @@
 <script src="js/logic.js"></script>
 
 <script>
+
+    var reviewArr = [];
+
+    function clearReview(paperId)
+    {
+        var len = reviewArr.length;
+        for (var i=0; i < len; i++)
+        {
+            del("Review",reviewArr[i].id,defaultSuccess,defaultError,false);
+        }
+
+        get("Paper",paperId,function(json)
+        {
+            var tmp={id:json.id,title:json.title,date:json.date,outline:json.outline,
+                author:json.author,tag:json.tag,status:"未审核",user_id:json.user_id};
+            put("Paper",tmp);
+        });
+
+        window.location.reload();
+    }
+
+    function getUsername(userId)
+    {
+        get("User",userId,function (obj)
+        {
+            //var obj = getFirstAttr(json);
+            return obj.username;
+        },defaultError,false);
+    }
+
+    function displayReviewer(reviews)
+    {
+
+        var len = reviews.length;
+
+        var empty = true;
+        for (var i=0; i < len; i++)
+        {
+            empty = false;
+            var htmlId = "#people" + (i+1);
+           // var name = getUsername(reviews[i].user_id)
+
+            get("User",reviews[i].user_id,function (obj)
+            {
+                //$(htmlId).attr("readonly","readonly");
+                //$(htmlId).css("color","#22222");
+
+                $(htmlId).val(obj.username);
+            },defaultError,false);
+        }
+
+        if (!empty)
+        {
+            for (i=1; i <=5; i++)
+            {
+                var htmlId = "#people" + (i);
+                $(htmlId).attr("readonly","readonly");
+            }
+        }
+    }
+
     paperId=getQueryString("id");
     $(document).ready(function ()
     {
-
         get("Paper","?Paper.id="+paperId,function (json)
         {
+
             var jsonArr = getFirstAttr(json);
             displayPapers("space-detail-block",jsonArr);
             get("Review","?Review.paper_id="+paperId,function (json)
             {
-                var paperArr=getFirstAttr(json);
-                displaySuggestion(paperArr);
-            },defaultError,false);
-        },defaultError,false);
+
+                reviewArr=getFirstAttr(json);
+                // 展示其他用户的评价
+                displaySuggestion(reviewArr);
+
+                // 展示目前的审核人
+                displayReviewer(reviewArr);
+
+            },defaultError);
+
+        },defaultError);
 
     })
 </script>
