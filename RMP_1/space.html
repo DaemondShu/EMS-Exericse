@@ -124,24 +124,24 @@
                 $("#login-model").html("你好！ "+json.username);
                 if(json.type==4)
                         $("#manage-model").show();
-                if(json.type==0)
-                {
+//                if(json.type==0)
+//                {
                     get("Paper","?Paper.user_id="+userId,function (json)
                     {
                         var jsonArr = getFirstAttr(json);
                         displayPapers("space-block",jsonArr);
                         changeHref("space",jsonArr);
                     },defaultError,false);
-                }
-                else
-                {
-                    get("Paper","",function (json)
-                    {
-                        var jsonArr = getFirstAttr(json);
-                        displayPapers("space-block",jsonArr);
-                        changeHref("space",jsonArr);
-                    },defaultError,false);
-                }
+//                }
+//                else
+//                {
+//                    get("Paper","",function (json)
+//                    {
+//                        var jsonArr = getFirstAttr(json);
+//                        displayPapers("space-block",jsonArr);
+//                        changeHref("space",jsonArr);
+//                    },defaultError,false);
+//                }
             },defaultError,false);
 
         }

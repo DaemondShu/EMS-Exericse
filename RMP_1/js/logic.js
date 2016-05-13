@@ -174,7 +174,7 @@ function upLoad() {
             var userid=getCookie("RMPUserId");
             var paper={title:title,date:dateStr,outline:outline,status:"未审核",author:author,tag:"",user_id:parseInt(userid),feedback:""};
             post("Paper",paper,function (json) {
-                message(JSON.stringify(json),1);
+                message(JSON.stringify(json),0);
                 var paperId = json.id;
                 message(paperId,1);
                 upLoadFile("Paper", paperId, getFileObject(("#File1")));
@@ -240,16 +240,18 @@ function manageSubmit(paperId) {
     judges[2]=$("#people3").val();
     judges[3]=$("#people4").val();
     judges[4]=$("#people5").val();
-    var count=0;
+
     var judgesId=0;
     get("User","",function (json) {
         var jsonArr = getFirstAttr(json);
         var len = jsonArr.length;
+        var count=0;
         for (var i = 0; i < 5; i++) {
             if (judges[i] != "") {
                 count++;
             }
         }
+
         if (count < 3) {
             message("审核人数需要3-5人", 0);
             return;
@@ -266,17 +268,18 @@ function manageSubmit(paperId) {
                 }
             }
         }
+        get("Paper",paperId,function(json)
+        {
+            var tmp={id:json.id,title:json.title,date:json.date,outline:json.outline,
+                author:json.author,tag:json.tag,status:"审核中",user_id:json.user_id};
+            put("Paper",tmp);
+        });
+
+        alert("设置成功");
+        window.location.reload();
     });
 
-    get("Paper",paperId,function(json)
-    {
-        var tmp={id:json.id,title:json.title,date:json.date,outline:json.outline,
-            author:json.author,tag:json.tag,status:"审核中",user_id:json.user_id};
-        put("Paper",tmp);
-    });
 
-    alert("设置成功");
-    window.location.reload();
 }
 
 /**

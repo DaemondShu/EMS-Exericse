@@ -117,7 +117,7 @@ function post(tableNameWithId, dataStr, goodCallBack, errorCallBack , isAsync)
  */
 function postFile(tableNameWithId, data, goodCallBack, errorCallBack, isAsync)
 {
-    alert(data.toString());
+    //alert(data.toString());
     if (goodCallBack == undefined) goodCallBack = defaultSuccess;
     if (errorCallBack == undefined) errorCallBack = defaultError;
     if (isAsync == undefined) isAsync = true;
